@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+namespace:名称空间
+-->
+
+<mapper namespace="com.leiou.mapper.BrandMapper">
+
+
+        <!-- 其他配置 -->
+        <resultMap id="brandResultMap" type="com.leiou.pojo.Brand">
+            <id column="id" property="id" />
+            <result column="company_name" property="companyName" />
+            <result column="brand_name" property="brandName" />
+        </resultMap>
+
+
+<select id="selectAll" resultMap="brandResultMap">
+    select * from brand;
+</select>
+
+    <!--<select id="selectAll" resultType="com.leiou.pojo.Brand">
+        select id, brand_name as brandName, company_name as companyName, ordered, description,status
+        from brand;
+    </select>-->
+
+
+    <select id="selectById" resultMap="brandResultMap">
+        select * from brand where id = #{id};
+    </select>
+
+    <!--<select id="selectByCondition" resultType="com.leiou.pojo.Brand">
+    select *
+    from brand
+    where status and company_name and brand_name;
+</select>
+-->
+<!--条件查询-->
+<select id="selectByCondition" resultMap="brandResultMap">
+    select * from brand where status = #{status}
+    and company_name like #{companyName}
+    and brand_name like #{brandName}
+</select>
+    <select id="selectZhengjia" resultMap="brandResultMap">
+       insert into mybatis.brand(id, brand_name, company_name, ordered, description, status)
+       values (#{id},#{brandName},#{companyName},#{ordered},#{description},#{status});
+    </select>
+    <select id="selectShanchu" resultMap="brandResultMap">
+        delete
+        from mybatis.brand
+        where id=#{id};
+    </select>
+    <select id="selectGai" resultType="java.lang.String">
+        update mybatis.brand set brand_name=#{brandName},company_name=#{companyName},ordered=#{ordered},
+                                 description=#{description},status=#{status} where id=#{id}
+    </select>
+
+
+</mapper>
+
+
